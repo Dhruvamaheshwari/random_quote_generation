@@ -15,12 +15,25 @@ Quick links
 - HTML: `index.html`
 - Dockerfile: multi-stage build which serves `dist/` using `vite preview` on port 4173
 
+Important: this app fetches quotes from the API Ninjas Quotes API (https://api.api-ninjas.com). You must provide an API key via an environment variable named `VITE_API_KEY` (see below).
+
 Requirements
 ------------
 
 - Node.js v18+ (recommended)
 - npm (bundled with Node)
 - Docker (optional, for container builds)
+
+Environment variables
+---------------------
+
+The app expects an API key in an environment variable named `VITE_API_KEY`. Create a `.env` file in the project root with:
+
+```env
+VITE_API_KEY=your_api_ninjas_key_here
+```
+
+Replace `your_api_ninjas_key_here` with your real API Ninjas key. Vite exposes variables prefixed with `VITE_` to the client bundle.
 
 Development — quick start
 -------------------------
@@ -39,6 +52,11 @@ npm run dev
 
 Open the address printed by Vite (usually http://localhost:5173). `package.json` runs Vite with `--host` so it binds to the network interface.
 
+Usage
+-----
+
+Click the "New Quote" button to fetch a random quote from API Ninjas. The app shows a loading state while the request is in progress.
+
 Scripts (from package.json)
 ---------------------------
 
@@ -46,6 +64,11 @@ Scripts (from package.json)
 - `build` — build production assets into `dist/`
 - `preview` / `start` — serve built `dist/` using `vite preview`
 - `lint` — run ESLint
+
+Security note
+-------------
+
+The API key is bundled into the client when prefixed with `VITE_`. Keep the key limited in privilege or rotate it if leaked. For full secrecy, proxy requests via your own backend instead of calling third-party APIs directly from the client.
 
 Build & preview (production)
 ----------------------------
